@@ -1025,3 +1025,5 @@ body{font-size:17px;background:var(--white);color:var(--ink)}
 /* Let the complete silhouettes extend beyond their layout columns. */
 .founder{overflow:visible}
 
+
+#service-geo>p{color:#fff;font-size:18px;line-height:1.65;margin:18px 0}#service-geo>.tag{display:block;color:#fff;font-size:14px;margin:0 0 18px}#service-geo>.btn{margin:0}.founder figcaption a{display:block;color:inherit;text-decoration:none}.founder figcaption a:focus-visible{outline:2px solid var(--blue);outline-offset:3px}.founder-message .cta__text>p:last-child{display:block}@media(max-width:520px){#service-geo>p{font-size:16px}}
