@@ -521,7 +521,7 @@ html{scroll-padding-top:88px}}
 .campaign-site{width:53%;background:white;border:1px solid var(--line);padding:4px;border-radius:7px;box-shadow:var(--rs-small-shadow);transform:rotateX(7deg) rotateY(-8deg)}
 .campaign-site img{width:100%;height:auto;border-radius:3px}
 .campaign-site .mini-browser-bar{height:16px;border:0}
-.rs-service.is-active .campaign-ad{background:#0097ea13;border-color:var(--blue)}
+.rs-service.is-active .campaign-ad{background:linear-gradient(135deg,#fff,#ffffffdb);border-color:var(--blue)}
 .rs-service.is-active .campaign-track>i{animation:rs-ad-transfer 1.3s var(--rs-ease) .3s both}
 .rs-service.is-active .campaign-site{animation:rs-site-arrive 1.5s var(--rs-ease)}
 @keyframes rs-ad-transfer{0%{opacity:0;left:0}20%{opacity:1}90%{opacity:1}100%{opacity:0;left:100%}}
