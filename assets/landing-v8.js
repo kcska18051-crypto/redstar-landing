@@ -1,0 +1,6 @@
+(()=>{
+ const track=document.querySelector('#review-track'),cards=[...track.querySelectorAll('.review')],prev=document.querySelector('.review-prev'),next=document.querySelector('.review-next'),label=document.querySelector('.review-position'),reduced=matchMedia('(prefers-reduced-motion: reduce)');
+ function state(){const gap=parseFloat(getComputedStyle(track).gap)||0,step=cards[0].getBoundingClientRect().width+gap,index=Math.round(track.scrollLeft/step),visible=Math.max(1,Math.round((track.clientWidth+gap)/step));prev.disabled=track.scrollLeft<2;next.disabled=track.scrollLeft>=track.scrollWidth-track.clientWidth-2;label.textContent=visible>1?`${index+1}–${Math.min(cards.length,index+visible)} / ${cards.length}`:`${index+1} / ${cards.length}`;return {step,index}}
+ function move(dir){const {step,index}=state();track.scrollTo({left:(index+dir)*step,behavior:reduced.matches?'instant':'smooth'})}
+ prev.addEventListener('click',()=>move(-1));next.addEventListener('click',()=>move(1));track.addEventListener('scroll',state,{passive:true});addEventListener('resize',state);track.addEventListener('keydown',e=>{if(e.target!==track)return;if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();move(e.key==='ArrowLeft'?-1:1)}});state();
+})();

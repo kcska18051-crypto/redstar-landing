@@ -1,0 +1,34 @@
+/* Accent pass: restrained palette, deliberately stronger editorial hierarchy. */
+.hero-scene h1{font-weight:800;font-size:68px;letter-spacing:-.06em}
+.hero-scene .hero-title-accent{color:var(--red)}
+.hero-scene .hero-kicker{display:flex;align-items:center;gap:12px;font-weight:600}
+.hero-scene .hero-kicker:before{content:'';width:26px;height:2px;background:var(--red);flex:none}
+.hero-scene .btn--primary{font-size:14px;padding-inline:28px;font-weight:700}
+.hero-scene .hero__sub{color:var(--ink);font-size:16px}
+.hero-scene .hcred__key{color:var(--navy);font-size:25px;font-weight:800}
+.hero-scene .hcred:nth-child(n+3) .hcred__key{font-size:32px;line-height:1.02}
+.hero-scene .hero-creds{padding-block:22px;background:rgba(255,255,255,.96)}
+.sales-band h2{font-weight:700;letter-spacing:-.06em}
+.sales-band h2 em{font-style:normal;color:var(--red)}
+.sales-band h2>span:first-child{margin-left:0}
+#uslugi{padding-top:46px}
+.services-intro{background:var(--navy);padding:48px;gap:50px;color:white;position:relative;isolation:isolate}
+.services-intro:before{content:'';position:absolute;left:48px;top:0;width:110px;height:4px;background:var(--red)}
+.services-intro__title>.section-index{color:white;font-size:10px;letter-spacing:.13em}
+.services-intro__title h2{color:white;font-weight:700;font-size:53px;line-height:1.13}
+.services-intro__title h2>span{display:inline-block;background:var(--red);color:white;padding:0 8px 3px;margin-top:5px}
+.services-intro__title>.btn{color:white;border-color:rgba(255,255,255,.45);font-size:13px;min-width:190px;background:none;margin-top:30px}
+.services-intro__explanation{margin-top:41px}
+.services-intro__explanation h3{color:white;font-weight:600;font-size:26px}
+.services-intro__explanation p,.services-intro__explanation .card__list{color:rgba(255,255,255,.9);font-size:14px}
+.services-intro__explanation .card__list{font-size:12px}
+.services-intro__explanation .btn{font-size:13px;font-weight:700;padding:17px 24px;min-height:54px}
+#uslugi .svc.card--link{grid-template-columns:62px 1fr 1.25fr .7fr}
+#uslugi .svc.card--link .svc__number{font-size:29px;font-weight:600;color:var(--navy);letter-spacing:-.06em}
+#uslugi .svc.card--link h3{font-size:27px;font-weight:600}
+#uslugi .svc.card--link:hover .card__arrow{background:var(--red);border-color:var(--red);color:white}
+@media(min-width:1600px){.hero-scene h1{font-size:79px}.services-intro__title h2{font-size:60px}}
+@media(max-width:1280px){.hero-scene h1{font-size:58px}.hero-scene .hero__sub{font-size:15px}.hero-scene .hcred__key{font-size:22px}.hero-scene .hcred:nth-child(n+3) .hcred__key{font-size:29px}.services-intro{padding:36px;gap:36px}.services-intro:before{left:36px}.services-intro__title h2{font-size:46px}.services-intro__explanation h3{font-size:23px}.services-intro__explanation p{font-size:13px}#uslugi .svc.card--link{grid-template-columns:45px 1fr 1.25fr .7fr}#uslugi .svc.card--link h3{font-size:24px}}
+@media(max-width:1020px){.hero-scene h1{font-size:51px}.hero-scene .hero__sub{font-size:14px}.services-intro{padding:30px;gap:28px}.services-intro:before{left:30px}.services-intro__title h2{font-size:41px}.services-intro__explanation h3{font-size:21px}#uslugi .svc.card--link{grid-template-columns:42px 1fr 1.1fr}.hero-scene .btn--primary{font-size:12px}}
+@media(max-width:800px){.hero-scene h1{font-size:43px}.services-intro{padding:36px;gap:30px}.services-intro__title h2{font-size:47px}.services-intro__explanation{margin-top:0}.services-intro__explanation h3{font-size:25px}.services-intro__explanation p{font-size:14px}.services-intro__explanation .card__list{font-size:12px}#uslugi .svc.card--link{grid-template-columns:40px 1fr 1.1fr}#uslugi .svc.card--link h3{font-size:23px}}
+@media(max-width:600px){.hero-scene h1{font-size:42px}.hero-scene .hero-kicker{font-size:7.7px;gap:8px}.hero-scene .hero-kicker:before{width:18px}.hero-scene .hero__sub{font-size:12.5px}.hero-scene .btn--primary{font-size:10.5px;padding-inline:17px}.hero-scene .hcred__key{font-size:20px}.hero-scene .hcred:nth-child(n+3) .hcred__key{font-size:28px}.hero-scene .hero-creds{padding-block:22px 24px}.sales-band h2{font-size:42px}.services-intro{padding:28px 22px;gap:30px}.services-intro:before{left:22px;width:65px}.services-intro__title>.section-index{font-size:9px}.services-intro__title h2{font-size:35px}.services-intro__title h2>span{padding-inline:6px}.services-intro__title>.btn{font-size:12px;margin-top:20px;min-width:175px}.services-intro__explanation h3{font-size:23px}.services-intro__explanation p{font-size:13px}.services-intro__explanation .card__list{font-size:11px}.services-intro__explanation .btn{font-size:12px;padding-inline:20px}#uslugi .svc.card--link{grid-template-columns:30px 1fr}#uslugi .svc.card--link .svc__number{font-size:22px}#uslugi .svc.card--link h3{font-size:23px}}

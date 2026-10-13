@@ -1,0 +1,68 @@
+(() => {
+  'use strict';
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)');
+  const records=[];
+  const panels=[...document.querySelectorAll('.rs-case5')];
+  const schedules={hero:[[0,'idle'],[1000,'ad'],[2600,'visit'],[4100,'action'],[5400,'inquiry'],[6900,'complete'],[9400,'reset']],sales:[[0,'idle'],[400,'collect'],[2800,'settled']]};
+  let currentCase=null;
+  function stop(record,reset=false){record.timers.forEach(clearTimeout);record.timers=[];record.el.classList.remove('is-running');if(reset)record.el.dataset.phase='idle';}
+  function cycle(record){
+    stop(record);
+    if(!record.visible||record.manualPause||document.hidden||reduce.matches||(record.type==='hero'&&!record.selected))return;
+    record.el.classList.add('is-running');
+    schedules[record.type].forEach(([time,phase])=>record.timers.push(setTimeout(()=>{record.el.dataset.phase=phase;},time)));
+    record.timers.push(setTimeout(()=>cycle(record),record.type==='hero'?10500:8500));
+  }
+  function syncCases(){
+    const center=innerHeight/2;
+    const inView=panels.filter(panel=>{const rect=panel.getBoundingClientRect();return rect.top<innerHeight&&rect.bottom>78;});
+    currentCase=inView.sort((a,b)=>Math.abs(a.getBoundingClientRect().top+a.offsetHeight/2-center)-Math.abs(b.getBoundingClientRect().top+b.offsetHeight/2-center))[0]||null;
+    panels.forEach(panel=>panel.classList.toggle('is-case-current',panel===currentCase));
+    records.filter(r=>r.type==='hero').forEach(r=>{
+      const selected=r.panel===currentCase&&r.visible;
+      if(selected!==r.selected){r.selected=selected;if(selected)cycle(r);else stop(r,true);}
+    });
+  }
+  document.querySelectorAll('[data-motion]').forEach(el=>{
+    const record={el,type:el.dataset.motion,panel:el.closest('.rs-case5'),visible:false,selected:false,manualPause:false,timers:[]};records.push(record);
+    new IntersectionObserver(entries=>{
+      record.visible=entries[0].isIntersecting&&entries[0].intersectionRatio>=.15;
+      if(record.type==='hero')syncCases();else if(record.visible)cycle(record);else stop(record,true);
+    },{threshold:[0,.15,.35,.5,.7]}).observe(el);
+    if(record.type!=='hero')return;
+    const pause=el.closest('.rs-process-wrap').querySelector('.rs-motion-toggle');pause.hidden=false;
+    pause.addEventListener('click',()=>{
+      record.manualPause=!record.manualPause;
+      pause.setAttribute('aria-pressed',String(record.manualPause));pause.setAttribute('aria-label',record.manualPause?'Возобновить анимацию':'Приостановить анимацию');pause.firstElementChild.textContent=record.manualPause?'▶':'Ⅱ';
+      if(record.manualPause){record.timers.forEach(clearTimeout);record.timers=[];record.el.classList.add('is-paused');}else{record.el.classList.remove('is-paused');cycle(record);}
+    });
+    let frame=0;
+    el.addEventListener('pointermove',event=>{
+      if(event.pointerType==='touch'||reduce.matches||!record.selected)return;
+      cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>{const rect=el.getBoundingClientRect();el.style.setProperty('--depth-x',((event.clientX-rect.left)/rect.width*2-1)*2+'deg');el.style.setProperty('--depth-y',-((event.clientY-rect.top)/rect.height*2-1)*1.5+'deg');});
+    });
+    el.addEventListener('pointerleave',()=>{el.style.setProperty('--depth-x','0deg');el.style.setProperty('--depth-y','0deg');});
+  });
+  let scrollFrame=0;
+  // Native document scrolling only: no wheel interception, snapping or scroll lock.
+  addEventListener('scroll',()=>{cancelAnimationFrame(scrollFrame);scrollFrame=requestAnimationFrame(syncCases);},{passive:true});
+  addEventListener('resize',syncCases);
+  const cards=[...document.querySelectorAll('.rs-service')];let active=null;
+  function deactivate(){cards.forEach(card=>{card.classList.remove('is-active');card.querySelector('[data-demo-service]').setAttribute('aria-pressed','false');});active=null;}
+  function activate(card){deactivate();active=card;card.classList.add('is-active');card.querySelector('[data-demo-service]').setAttribute('aria-pressed','true');}
+  cards.forEach(card=>{
+    const button=card.querySelector('[data-demo-service]');button.hidden=false;
+    card.addEventListener('pointerenter',event=>{if(event.pointerType!=='touch')activate(card);});
+    card.addEventListener('pointerleave',event=>{if(event.pointerType!=='touch'&&!card.contains(document.activeElement)&&active===card)deactivate();});
+    card.addEventListener('focusin',()=>activate(card));card.addEventListener('focusout',event=>{if(!card.contains(event.relatedTarget)&&active===card)deactivate();});
+    button.addEventListener('click',()=>{deactivate();requestAnimationFrame(()=>activate(card));});
+    new IntersectionObserver(entries=>{if(!entries[0].isIntersecting&&active===card)deactivate();},{threshold:.05}).observe(card);
+  });
+  document.addEventListener('visibilitychange',()=>{if(document.hidden){records.forEach(r=>stop(r));deactivate();}else records.forEach(cycle);});
+  reduce.addEventListener('change',()=>{deactivate();records.forEach(r=>{stop(r,true);if(!reduce.matches)cycle(r);});});
+  window.redstarMotion={
+    snapshot:()=>({reduced:reduce.matches,activeCase:currentCase?.id??null,scenes:records.map(r=>({type:r.type,case:r.panel?.id??null,phase:r.el.dataset.phase,visible:r.visible,selected:r.selected,running:r.el.classList.contains('is-running'),pending:r.timers.length})),activeService:active?.dataset.service??null}),
+    restart:(caseId='case-volkov')=>{const r=records.find(r=>r.panel?.id===caseId);if(r){r.manualPause=false;cycle(r);}}
+  };
+})();
+
