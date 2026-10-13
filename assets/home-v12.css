@@ -612,7 +612,7 @@ html{scroll-padding-top:88px}}
 .rs-process-controls{min-height:54px}
 @media(max-width:520px){.rs-site{top:25%;width:94%;left:1%}
 .rs-process-controls{min-height:38px}}
-body{font-size:17px;background:#e4e4e436;color:var(--ink)}
+body{font-size:17px;background:var(--white);color:var(--ink)}
 
 .nav__link{font-size:14px}
 .nav__phone{font-size:15px}
